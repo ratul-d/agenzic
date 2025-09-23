@@ -1,12 +1,13 @@
 import typer
-from .commands import commit, summarize, review, version
+from agenzic.commands import commit, summarize, review, version, docgen
 
 app = typer.Typer(help="Agenzic CLI - AI assistant for developers")
 
+version.register(app)
 commit.register(app)
 summarize.register(app)
 review.register(app)
-version.register(app)
+docgen.register(app)
 
 def main():
     """Entry point for console_scripts"""
