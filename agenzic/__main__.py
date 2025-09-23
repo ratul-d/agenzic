@@ -31,12 +31,11 @@ def commit(alt: int = 1):
     choice = typer.prompt("\nDo you want to (c)ommit, (e)dit, or (q)uit?", default="c")
 
     if choice.lower().startswith("c"):
-        commit_msg = result.split("\n")[0].strip()
-        subprocess.run(["git","commit","-m",commit_msg])
-        typer.echo(f"Commited with {commit_msg}")
+        commit_lines = result.split("\n")
+        subprocess.run(["git", "commit", "-m", commit_lines[0], "-m", "\n".join(commit_lines[1:])])
+        typer.echo(f"Commited with {commit_lines}")
 
     elif choice.lower().startswith("e"):
-        commit_msg = result.split("\n")[0].strip()
         commit_msg = typer.prompt("Edit your commit message",default=result.split("\n")[0].strip())
         subprocess.run(["git", "commit", "-m", commit_msg])
         typer.echo(f"Commited with {commit_msg}")
