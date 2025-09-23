@@ -1,7 +1,7 @@
 import os
 import typer
 import requests
-from .utils import get_api_key
+from agenzic.utils.helpers import get_api_key
 
 API_URL = "https://api.openai.com/v1/chat/completions"
 
