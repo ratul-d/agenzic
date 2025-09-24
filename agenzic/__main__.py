@@ -1,5 +1,5 @@
 import typer
-from agenzic.commands import commit, summarize, review, docgen, tests
+from agenzic.commands import commit, summarize, review, docgen, tests, ask, inception
 import agenzic
 import platform
 
@@ -48,6 +48,7 @@ def help():
         "review": "Review code (staged diff or specific file)",
         "docgen": "Generate project or file documentation",
         "tests": "Generate unit tests for your code",
+        "ask": "Ask AI a question about your project or a specific file. | Defaults to current directory. Use --file or --dir to override.",
         "version": "Show Agenzic version and environment info",
         "about": "Show project information",
         "help": "Show this help message",
@@ -59,12 +60,35 @@ def help():
     usage_examples = [
         ("Commit", "agenzic commit"),
         ("Summarize", "agenzic summarize myscript.py"),
-        ("Review", "agenzic review\n  agenzic review --file utils/helpers.py"),
+        ("Review", "agenzic review\n  agenzic review --file myscript.py"),
         ("Docgen", "agenzic docgen --file myscript.py\n  agenzic docgen --dir <folder>"),
         ("Tests", "agenzic tests myscript.py"),
+        ("Ask", "agenzic ask 'Your Question'\n  agenzic ask 'Your Question' --file app.py\n  agenzic ask 'Your Question' --dir <folder>"),
         ("Version", "agenzic version"),
         ("About", "agenzic about"),
         ("Help", "agenzic help"),
+    ]
+    for title, example in usage_examples:
+        typer.echo(
+            f"{typer.style(title + ':', fg=typer.colors.BRIGHT_BLUE, bold=True)}\n  {example}"
+        )
+
+@app.command(hidden=True)
+def experimental():
+    """Show experimental commands and usage examples"""
+    typer.echo(typer.style("\nAgenzic CLI - Experimental Commands", fg=typer.colors.BRIGHT_CYAN, bold=True))
+    typer.echo("=" * 35)
+
+    typer.echo(typer.style("\nAvailable Commands:", fg=typer.colors.BRIGHT_RED, bold=True))
+    commands = {
+        "icodegen": "Code Generation with a prompt and write the result to a file using InceptionLabs' mercury-coder",
+    }
+    for cmd, desc in commands.items():
+        typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
+
+    typer.echo(typer.style("\nUsage Examples:", fg=typer.colors.BRIGHT_BLUE, bold=True))
+    usage_examples = [
+        ("icodegen", "icodegen 'write a python code' --file abc.py"),
     ]
     for title, example in usage_examples:
         typer.echo(
@@ -77,6 +101,10 @@ summarize.register(app)
 review.register(app)
 docgen.register(app)
 tests.register(app)
+ask.register(app)
+
+# Experimental
+inception.register(app)
 
 def main():
     """Entry point for console_scripts"""
