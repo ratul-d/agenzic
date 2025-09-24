@@ -12,25 +12,37 @@ def register(app: typer.Typer):
             typer.echo("No staged changes found. Stage your changes with `git add`.")
             raise typer.Exit(1)
 
-        prompt = f"Generate{alt} conventional/professional commit message(s) for this git diff:\n{diff}"
+        prompt = f"Generate {alt} conventional/professional commit message(s) for this git diff:\n{diff}"
 
-        typer.echo("Thinking ...")
         result = ask_ai(prompt)
 
-        typer.echo("\nAI Suggestion(s):")
+        typer.echo(typer.style("\nAI Suggestion(s):",fg=typer.colors.BRIGHT_GREEN))
         typer.echo(result)
 
-        choice = typer.prompt("\nDo you want to (c)ommit, (e)dit, or (q)uit?", default="c")
+        flag = True
+        while flag:
+            choice = typer.prompt(typer.style("\nDo you want to (c)ommit, (e)dit, or (q)uit?", fg=typer.colors.BRIGHT_GREEN), default="q")
 
-        if choice.lower().startswith("c"):
-            commit_lines = result.split("\n")
-            subprocess.run(["git", "commit", "-m", commit_lines[0], "-m", "\n".join(commit_lines[1:])])
-            typer.echo(f"Commited with {commit_lines}")
+            if choice.lower().startswith("c"):
+                flag = False
+                commit_lines = result.split("\n")
+                subprocess.run(["git", "commit", "-m", commit_lines[0], "-m", "\n".join(commit_lines[1:])])
+                typer.echo(f"Commited with {commit_lines}")
 
-        elif choice.lower().startswith("e"):
-            commit_msg = typer.prompt("Edit your commit message",default=result.split("\n")[0].strip())
-            subprocess.run(["git", "commit", "-m", commit_msg])
-            typer.echo(f"Commited with {commit_msg}")
+            elif choice.lower().startswith("e"):
+                changes = typer.prompt(typer.style("\nDescribe changes you would like the AI to make to your commit message", fg=typer.colors.BRIGHT_GREEN))
+                prompt = (
+                    f"You are a commit message assistant.\n"
+                    f"Original Git Diff:\n{diff}\n\n"
+                    f"Old Commit Message:\n{result}\n\n"
+                    f"Requested changes:\n{changes}\n\n"
+                    f"Generate {alt} conventional/professional commit message(s) with the changes suggested."
+                    f"Your response should only have the updated commit message and do not use triple backticks ```"
+                )
+                typer.echo(typer.style("\nAI Suggestion(s):",fg=typer.colors.BRIGHT_GREEN))
+                result =  ask_ai(prompt)
+                typer.echo(result.strip('```'))
 
-        else:
-            typer.echo("Commit cancelled")
+            else:
+                flag = False
+                typer.echo(typer.style("Commit cancelled", fg=typer.colors.BRIGHT_RED))
