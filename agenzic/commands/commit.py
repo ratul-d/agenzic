@@ -9,11 +9,12 @@ def register(app: typer.Typer):
         diff = subprocess.getoutput("git diff --staged")
 
         if not diff:
-            typer.echo("No staged changes found. Stage your changes with `git add`.")
+            typer.echo(typer.style("No staged changes found. Stage your changes with `git add`.",fg=typer.colors.RED))
             raise typer.Exit(1)
 
         prompt = f"Generate {alt} conventional/professional commit message(s) for this git diff:\n{diff}"
 
+        typer.echo(typer.style("Generating Commit Message:", fg=typer.colors.BRIGHT_GREEN))
         result = ask_ai(prompt)
 
         typer.echo(typer.style("\nAI Suggestion(s):",fg=typer.colors.BRIGHT_GREEN))
@@ -27,7 +28,7 @@ def register(app: typer.Typer):
                 flag = False
                 commit_lines = result.split("\n")
                 subprocess.run(["git", "commit", "-m", commit_lines[0], "-m", "\n".join(commit_lines[1:])])
-                typer.echo(f"Commited with {commit_lines}")
+                typer.echo(typer.style("Commited.",fg=typer.colors.BRIGHT_GREEN))
 
             elif choice.lower().startswith("e"):
                 changes = typer.prompt(typer.style("\nDescribe changes you would like the AI to make to your commit message", fg=typer.colors.BRIGHT_GREEN))
@@ -37,12 +38,12 @@ def register(app: typer.Typer):
                     f"Old Commit Message:\n{result}\n\n"
                     f"Requested changes:\n{changes}\n\n"
                     f"Generate {alt} conventional/professional commit message(s) with the changes suggested."
-                    f"Your response should only have the updated commit message and do not use triple backticks ```"
+                    f"Your response should only have the updated commit message."
                 )
                 typer.echo(typer.style("\nAI Suggestion(s):",fg=typer.colors.BRIGHT_GREEN))
                 result =  ask_ai(prompt)
-                typer.echo(result.strip('```'))
+                typer.echo(result)
 
             else:
                 flag = False
-                typer.echo(typer.style("Commit cancelled", fg=typer.colors.BRIGHT_RED))
+                typer.echo(typer.style("Commit cancelled", fg=typer.colors.RED))

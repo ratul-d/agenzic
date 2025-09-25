@@ -5,16 +5,16 @@ from agenzic.utils.ai_client import ask_ai
 def register(app: typer.Typer):
     @app.command()
     def ask(question: str,
-            file: str = typer.Option(None,help="Path to specific file to search"),
-            dir: str = typer.Option(".",help="Path folder to search if no file specified")
+            file: str = typer.Option(None, "-f",help="Path to specific file to search"),
+            dir: str = typer.Option(".", "-d", help="Path folder to search if no file specified")
     ):
         """
         Ask AI a question about your project or a specific file. |
-        Defaults to current directory. Use --file or --dir to override.
+        Defaults to current directory. Use -f or -d to override.
         """
         if file:
             if not os.path.exists(file):
-                typer.echo(f"File not found: {file}")
+                typer.echo(typer.style(f"File not found: ",fg=typer.colors.RED)+f"{file}")
                 raise typer.Exit(1)
             with open(file, "r", encoding="utf-8") as f:
                 code_content = f.read()
@@ -29,7 +29,7 @@ def register(app: typer.Typer):
                             code_content += file_f.read()
 
         if not code_content.strip():
-            typer.echo("No code content found to analyze.")
+            typer.echo(typer.style("No code content found to analyze in directory: ",fg=typer.colors.RED)+f"{dir}")
             raise typer.Exit(1)
 
         prompt = f"""
@@ -43,7 +43,7 @@ def register(app: typer.Typer):
             {question}
             """
 
-        typer.echo("Thinking...")
+        typer.echo(typer.style("Thinking...",fg=typer.colors.BRIGHT_GREEN))
         answer=ask_ai(prompt)
-        typer.echo("\nAI Answer:\n")
+        typer.echo(typer.style("\nAI Answer:",fg=typer.colors.BRIGHT_GREEN))
         typer.echo(answer)

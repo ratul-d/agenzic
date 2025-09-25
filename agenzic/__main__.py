@@ -45,7 +45,7 @@ def help():
     commands = {
         "commit": "Generate AI commit message(s) for staged changes",
         "summarize": "Summarize a code file with AI",
-        "review": "Review code (staged diff or specific file)",
+        "review": "Generate AI-powered code review of a code file",
         "docgen": "Generate project or file documentation",
         "tests": "Generate unit tests for your code",
         "ask": "Ask AI a question about your project or a specific file. | Defaults to current directory. Use --file or --dir to override.",
@@ -59,11 +59,11 @@ def help():
     typer.echo(typer.style("\nUsage Examples:", fg=typer.colors.BRIGHT_BLUE, bold=True))
     usage_examples = [
         ("Commit", "agenzic commit"),
-        ("Summarize", "agenzic summarize myscript.py"),
-        ("Review", "agenzic review\n  agenzic review --file myscript.py"),
-        ("Docgen", "agenzic docgen --file myscript.py\n  agenzic docgen --dir <folder>"),
-        ("Tests", "agenzic tests myscript.py"),
-        ("Ask", "agenzic ask 'Your Question'\n  agenzic ask 'Your Question' --file app.py\n  agenzic ask 'Your Question' --dir <folder>"),
+        ("Summarize", "agenzic summarize -f myscript.py"),
+        ("Review", "agenzic review -f myscript.py"),
+        ("Docgen", "agenzic docgen -f myscript.py\n  agenzic docgen -d <folder>"),
+        ("Tests", "agenzic tests -f myscript.py"),
+        ("Ask", "agenzic ask 'Your Question'\n  agenzic ask 'Your Question' -f app.py\n  agenzic ask 'Your Question' -d <folder>"),
         ("Version", "agenzic version"),
         ("About", "agenzic about"),
         ("Help", "agenzic help"),

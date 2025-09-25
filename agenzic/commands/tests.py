@@ -4,12 +4,12 @@ from agenzic.utils.ai_client import ask_ai
 
 def register(app: typer.Typer):
     @app.command()
-    def tests(file: str):
+    def tests(file: str = typer.Option(..., "-f", help="Path to a specific code file")):
         """
         Generate AI-powered unit test suggestions for a Python file.
         """
         if not os.path.exists(file):
-            typer.echo(f"File not found: {file}")
+            typer.echo(typer.style("File not found: ",fg=typer.colors.RED)+f"{file}")
             raise typer.Exit(1)
 
         with open(file, "r", encoding="utf-8") as f:
@@ -25,7 +25,7 @@ def register(app: typer.Typer):
             f"{code_content}"
         )
 
-        typer.echo(f"Generating test cases for {file} ...")
+        typer.echo(typer.style(f"Generating test cases for: ", fg=typer.colors.BRIGHT_GREEN)+f"{file}")
         test_output = ask_ai(prompt)
 
         file_dir = os.path.dirname(file)
@@ -35,4 +35,4 @@ def register(app: typer.Typer):
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(test_output)
 
-        typer.echo(f"Test suggestions written to: {out_path}")
+        typer.echo(typer.style(f"Test suggestions written to: ", fg=typer.colors.BRIGHT_GREEN)+f"{out_path}")
