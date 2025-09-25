@@ -1,6 +1,8 @@
 import os
 import typer
 from agenzic.utils.ai_client import ask_ai
+from rich.markdown import Markdown
+from rich.console import Console
 
 def register(app: typer.Typer):
     @app.command()
@@ -46,4 +48,7 @@ def register(app: typer.Typer):
         typer.echo(typer.style("Thinking...",fg=typer.colors.BRIGHT_GREEN))
         answer=ask_ai(prompt)
         typer.echo(typer.style("\nAI Answer:",fg=typer.colors.BRIGHT_GREEN))
-        typer.echo(answer)
+
+        console = Console()
+        md = Markdown(answer)
+        console.print(md)

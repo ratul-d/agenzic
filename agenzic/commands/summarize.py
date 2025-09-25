@@ -1,6 +1,8 @@
 import typer
 from agenzic.utils.ai_client import ask_ai
 import os
+from rich.console import Console
+from rich.markdown import Markdown
 
 def register(app: typer.Typer):
     @app.command()
@@ -16,4 +18,7 @@ def register(app: typer.Typer):
         typer.echo(typer.style("Summarizing: ",fg=typer.colors.BRIGHT_GREEN)+f"{file}")
         summary = ask_ai(prompt)
         typer.echo(typer.style("\nAI Summary:",fg=typer.colors.BRIGHT_GREEN))
-        typer.echo(summary)
+
+        console = Console()
+        md = Markdown(summary)
+        console.print(md)

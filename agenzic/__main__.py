@@ -66,7 +66,7 @@ def help():
         ("Ask", "agenzic ask 'Your Question'\n  agenzic ask 'Your Question' -f app.py\n  agenzic ask 'Your Question' -d <folder>"),
         ("Version", "agenzic version"),
         ("About", "agenzic about"),
-        ("Help", "agenzic help"),
+        ("Help", "agenzic help\n"),
     ]
     for title, example in usage_examples:
         typer.echo(
@@ -90,7 +90,7 @@ def experimental():
     typer.echo(typer.style("\nUsage Examples:", fg=typer.colors.BRIGHT_BLUE, bold=True))
     usage_examples = [
         ("icodegen", "agenzic icodegen 'write a python code' --file abc.py"),
-        ("codemetrics", "agenzic codemetrics --file abc.py"),
+        ("codemetrics", "agenzic codemetrics --file abc.py\n"),
     ]
     for title, example in usage_examples:
         typer.echo(

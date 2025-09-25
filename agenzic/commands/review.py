@@ -2,6 +2,9 @@ import subprocess
 import typer
 from agenzic.utils.ai_client import ask_ai
 import os
+from rich.console import Console
+from rich.markdown import Markdown
+
 
 def register(app: typer.Typer):
     @app.command()
@@ -29,4 +32,7 @@ def register(app: typer.Typer):
 
         review_output = ask_ai(prompt)
         typer.echo(typer.style("\nAI Review:",fg=typer.colors.BRIGHT_GREEN))
-        typer.echo(review_output)
+
+        console = Console()
+        md = Markdown(review_output)
+        console.print(md)

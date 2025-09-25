@@ -3,6 +3,8 @@ import typer
 import ast
 from radon.complexity import cc_visit
 from radon.metrics import h_visit,mi_visit
+from rich.table import Table
+from rich.console import Console
 
 # -------------------------------------------------------------------------
 # EXPERIMENTAL COMMAND: Python Function Extractor & Code Metrics
@@ -60,9 +62,19 @@ def register(app: typer.Typer):
             },
             "maintainability_index": mi
         }
-        typer.echo(f"Lines of Code: {metrics['loc']}")
-        typer.echo(f"Number of Functions: {metrics['functions']}")
-        typer.echo(f"Number of Classes: {metrics['classes']}")
-        typer.echo(f"Cyclomatic Complexity (average): {metrics['cyclomatic_complexity']['average']}")
-        typer.echo(f"Cyclomatic Complexity (all): {metrics['cyclomatic_complexity']['all']}")
-        typer.echo(f"Maintainability Index: {metrics['maintainability_index']}")
+
+        console = Console()
+        table = Table(title="Code Metrics")
+
+        table.add_column("Metric", style=typer.colors.BRIGHT_GREEN, no_wrap=True)
+        table.add_column("Value", style=typer.colors.BRIGHT_WHITE)
+
+        # Add rows (with first-letter capitalized keys)
+        table.add_row("Lines of Code", str(loc))
+        table.add_row("Functions", str(num_functions))
+        table.add_row("Classes", str(num_classes))
+        table.add_row("Cyclomatic Complexity (Average)", str(avg_cc))
+        table.add_row("Cyclomatic Complexity (All)", str(cc_scores))
+        table.add_row("Maintainability Index", str(mi))
+
+        console.print(table)
