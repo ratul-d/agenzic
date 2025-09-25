@@ -1,5 +1,5 @@
 import typer
-from agenzic.commands import commit, summarize, review, docgen, tests, ask, inception
+from agenzic.commands import commit, summarize, review, docgen, tests, ask, inception, codemetrics
 import agenzic
 import platform
 
@@ -81,14 +81,16 @@ def experimental():
 
     typer.echo(typer.style("\nAvailable Commands:", fg=typer.colors.BRIGHT_RED, bold=True))
     commands = {
-        "icodegen": "Code Generation with a prompt and write the result to a file using InceptionLabs' mercury-coder",
+        "icodegen": "Generate code from a prompt and write to file with InceptionLabs' mercury-coder.",
+        "codemetrics": "Generate code metrics for a Python file.",
     }
     for cmd, desc in commands.items():
         typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
 
     typer.echo(typer.style("\nUsage Examples:", fg=typer.colors.BRIGHT_BLUE, bold=True))
     usage_examples = [
-        ("icodegen", "icodegen 'write a python code' --file abc.py"),
+        ("icodegen", "agenzic icodegen 'write a python code' --file abc.py"),
+        ("codemetrics", "agenzic codemetrics --file abc.py"),
     ]
     for title, example in usage_examples:
         typer.echo(
@@ -105,6 +107,7 @@ ask.register(app)
 
 # Experimental
 inception.register(app)
+codemetrics.register(app)
 
 def main():
     """Entry point for console_scripts"""

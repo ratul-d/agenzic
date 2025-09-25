@@ -7,7 +7,7 @@ import requests
 # EXPERIMENTAL COMMAND
 # Purpose: Testing InceptionLabs' `mercury-coder` for code generation.
 # Benchmark: ~7 seconds faster than `gpt-4o-mini` on codegen tests.
-# Status: Disabled by default — won't appear in CLI unless `register()` is called.
+# Status: Hidden / Experimental
 # Notes:
 #   - Needs environment variable `INCEPTION_API_KEY` to be set.
 # -------------------------------------------------------------------------
