@@ -1,6 +1,7 @@
-# Agenzic
 
-**Agenzic** is a terminal-based AI assistant for developers. It streamlines developer workflows by providing AI-powered commit messages, code/file summarization, pull request reviews, documentation generation, and unit test suggestions — all from the command line.
+# Agenzic CLI
+
+Agenzic is a terminal-based AI assistant for developers. It streamlines developer workflows by providing AI-powered commit messages, code/file summarization, pull request reviews, documentation generation, and unit test suggestions — all from the command line.
 
 ---
 
@@ -31,25 +32,14 @@
 
 ## Installation
 
+
 ```bash
 pip install agenzic
 ```
 
-> **Note:** Agenzic requires an OpenAI API key. Set it as an environment variable:
-
-```bash
-export OPENAI_API_KEY="your_api_key_here"
-```
-
-Or, if using a `.env` file:
-
-```
-OPENAI_API_KEY=your_api_key_here
-```
-
----
 
 ## Usage
+
 
 ```bash
 # Generate AI commit messages for staged changes
@@ -85,36 +75,12 @@ agenzic help
 
 ---
 
-## Project Structure
+## Contributing
 
-```
-agenzic/
-├── agenzic/                # Python package
-│   ├── __init__.py
-│   ├── __main__.py         # CLI entrypoint
-│   ├── commands/           # Individual commands (commit, summarize, review, etc.)
-│   └── utils/              # Utility functions (API key, helpers)
-├── pyproject.toml           # Project configuration
-├── README.md               # This file
-└── LICENSE                 # License file
-```
+[Agenzic](https://github.com/ratul-d/agenzic) is open-source! Contributions are welcome via pull requests and issues.
 
----
+
 
 ## License
 
-Agenzic is licensed under the [MIT License](LICENSE).
-
----
-
-## Contributing
-
-Contributions are welcome!
-
-* Fork the repository
-* Create a feature branch (`git checkout -b feature/my-feature`)
-* Commit your changes (`git commit -am 'Add feature'`)
-* Push to the branch (`git push origin feature/my-feature`)
-* Open a Pull Request
-
----
+This project is licensed under the MIT License.

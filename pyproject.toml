@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agenzic"
-version = "0.1.0"
+version = "0.1.1"
 description = "AI-powered CLI assistant for developers: commits, summaries, PR reviews, docs."
-readme = "README.md"
+readme = "PYPI_README.md"
 authors = [
   { name = "Ratul Dash" }
 ]
@@ -14,8 +14,9 @@ license = { file = "LICENSE" }
 requires-python = ">=3.11"
 dependencies = [
     "dotenv>=0.9.9",
+    "radon>=6.0.1",
     "requests>=2.31.0",
-    "typer>=0.9.0",
+    "typer>=0.19.0",
 ]
 
 keywords = ["ai", "cli", "developer-tools", "commit", "review", "summarize", "docs", "tests"]
