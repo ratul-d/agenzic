@@ -1,5 +1,5 @@
 import typer
-from agenzic.commands import commit, summarize, review, tests, ask, codemetrics
+from agenzic.commands import commit, summarize, review, tests, ask, codemetrics, inspect
 from agenzic.commands.experimental import graph, inception, docgen, myflow
 import agenzic
 import platform
@@ -55,7 +55,7 @@ def help():
         "ask": "Ask AI a question about your project or a specific file. | Defaults to current directory. Use -f or -d to override.",
         "version": "Show Agenzic version and environment info",
         "about": "Show project information",
-        "help": "Show this help message",
+        "inspect": "Debug inspector: show environment, config, PATH, plugins, Python version.",
     }
     for cmd, desc in commands.items():
         typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
@@ -74,6 +74,7 @@ def help():
         ("Version", ["agenzic version"]),
         ("About", ["agenzic about"]),
         ("Help", ["agenzic help"]),
+        ("Inspect", ["agenzic inspect"]),
     ]
 
     # Create table
@@ -146,6 +147,7 @@ inception.register(app)
 codemetrics.register(app)
 graph.register(app)
 myflow.register(app)
+inspect.register(app)
 
 def main():
     """Entry point for console_scripts"""

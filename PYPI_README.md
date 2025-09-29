@@ -71,6 +71,9 @@ agenzic about
 
 # Display help
 agenzic help
+
+# Debug inspector: show environment, config, PATH, plugins, Python version.
+agenzic inspect
 ```
 
 ---
