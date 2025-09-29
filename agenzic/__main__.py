@@ -1,8 +1,12 @@
 import typer
-from agenzic.commands import commit, summarize, review, docgen, tests, ask, inception, codemetrics
+from agenzic.commands import commit, summarize, review, tests, ask, codemetrics
+from agenzic.commands.experimental import graph, inception, docgen, myflow
 import agenzic
 import platform
+from rich.console import Console
+from rich.table import Table
 
+console = Console()
 app = typer.Typer(help="Agenzic CLI - AI assistant for developers")
 
 @app.command()
@@ -56,22 +60,34 @@ def help():
     for cmd, desc in commands.items():
         typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
 
-    typer.echo(typer.style("\nUsage Examples:", fg=typer.colors.BRIGHT_BLUE, bold=True))
     usage_examples = [
-        ("Commit", "agenzic commit"),
-        ("Summarize", "agenzic summarize -f myscript.py"),
-        ("Review", "agenzic review -f myscript.py"),
-        ("Docgen", "agenzic docgen -f myscript.py\n  agenzic docgen -d folder/"),
-        ("Tests", "agenzic tests -f myscript.py"),
-        ("Ask", "agenzic ask 'Your Question'\n  agenzic ask 'Your Question' -f app.py\n  agenzic ask 'Your Question' -d folder/"),
-        ("Version", "agenzic version"),
-        ("About", "agenzic about"),
-        ("Help", "agenzic help\n"),
+        ("Commit", ["agenzic commit"]),
+        ("Summarize", ["agenzic summarize -f myscript.py"]),
+        ("Review", ["agenzic review -f myscript.py"]),
+        ("Docgen", ["agenzic docgen -f myscript.py", "agenzic docgen -d folder/"]),
+        ("Tests", ["agenzic tests -f myscript.py"]),
+        ("Ask", [
+            "agenzic ask 'Your Question'",
+            "agenzic ask 'Your Question' -f app.py",
+            "agenzic ask 'Your Question' -d folder/"
+        ]),
+        ("Version", ["agenzic version"]),
+        ("About", ["agenzic about"]),
+        ("Help", ["agenzic help"]),
     ]
-    for title, example in usage_examples:
-        typer.echo(
-            f"{typer.style(title + ':', fg=typer.colors.BRIGHT_BLUE, bold=True)}\n  {example}"
-        )
+
+    # Create table
+    table = Table(show_header= False, header_style="bold bright_blue", show_lines=True)
+    table.add_column("Command", style="bright_blue", no_wrap=True)
+    table.add_column("Usage Example", style="white")
+
+    # Add rows with indented multiline examples
+    for title, examples in usage_examples:
+        example_text = "\n".join(f"  {line}" for line in examples)  # indent each line
+        table.add_row(title, example_text)
+
+    console.print("\nUsage Examples:", style="bold bright_blue")
+    console.print(table)
 
 @app.command(hidden=True)
 def experimental():
@@ -83,19 +99,39 @@ def experimental():
     commands = {
         "icodegen": "Generate code from a prompt and write to file with InceptionLabs' mercury-coder.",
         "codemetrics": "Generate code metrics for a Python file.",
+        "graph": "Generate file-by-file dependency graph for a Python directory.",
+        "myflow": "Manage recorded command flows",
+        "\t|-> myflow record": "Record a new command flow",
+        "\t|-> myflow replay": "Replay a command flow",
+        "\t|-> myflow delete": "Delete a saved command flow",
+        "\t|-> myflow flows": "List all recorded command flows",
     }
     for cmd, desc in commands.items():
         typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
 
     typer.echo(typer.style("\nUsage Examples:", fg=typer.colors.BRIGHT_BLUE, bold=True))
     usage_examples = [
-        ("icodegen", "agenzic icodegen 'write a python code' --file abc.py"),
-        ("codemetrics", "agenzic codemetrics --file abc.py\n"),
+        ("icodegen", ["agenzic icodegen 'write a python code' --file abc.py"]),
+        ("codemetrics", ["agenzic codemetrics --file abc.py"]),
+        ("graph", ["agenzic graph -d folder/"]),
+        ("myflow", [
+            "agenzic myflow record <name>",
+            "agenzic myflow replay <name>",
+            "agenzic myflow delete <name>",
+            "agenzic myflow flows"
+        ]),
     ]
-    for title, example in usage_examples:
-        typer.echo(
-            f"{typer.style(title + ':', fg=typer.colors.BRIGHT_BLUE, bold=True)}\n  {example}"
-        )
+
+    table = Table(show_header=False, header_style="bold bright_blue",show_lines=True)
+
+    table.add_column("Command", style="bright_blue", no_wrap=True)
+    table.add_column("Usage Example", style="white")
+
+    for title, examples in usage_examples:
+        example_text = "\n".join(f"  {line}" for line in examples)
+        table.add_row(title, example_text)
+
+    console.print(table)  # soft border color
 
 
 commit.register(app)
@@ -108,6 +144,8 @@ ask.register(app)
 # Experimental
 inception.register(app)
 codemetrics.register(app)
+graph.register(app)
+myflow.register(app)
 
 def main():
     """Entry point for console_scripts"""
