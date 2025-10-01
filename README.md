@@ -37,14 +37,9 @@ pip install agenzic
 
 > **Note:** Agenzic requires an OpenAI API key. Set it as an environment variable:
 
-```bash
-export OPENAI_API_KEY="your_api_key_here"
-```
-
-Or, if using a `.env` file:
-
 ```
 OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=openai_model_name_here
 ```
 
 ---

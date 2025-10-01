@@ -53,9 +53,16 @@ def help():
         "docgen": "Generate project or file documentation",
         "tests": "Generate unit tests for your code",
         "ask": "Ask AI a question about your project or a specific file. | Defaults to current directory. Use -f or -d to override.",
+        "inspect": "Debug inspector: show environment, config, PATH, plugins, Python version.",
+    }
+    for cmd, desc in commands.items():
+        typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
+
+    typer.echo(typer.style("\nInfo Commands:", fg=typer.colors.BRIGHT_RED, bold=True))
+    commands = {
         "version": "Show Agenzic version and environment info",
         "about": "Show project information",
-        "inspect": "Debug inspector: show environment, config, PATH, plugins, Python version.",
+        "help": "Show this help message",
     }
     for cmd, desc in commands.items():
         typer.echo(f"  {typer.style(cmd, fg=typer.colors.BRIGHT_RED, bold=True)}  {desc}")
@@ -71,10 +78,10 @@ def help():
             "agenzic ask 'Your Question' -f app.py",
             "agenzic ask 'Your Question' -d folder/"
         ]),
+        ("Inspect", ["agenzic inspect"]),
         ("Version", ["agenzic version"]),
         ("About", ["agenzic about"]),
         ("Help", ["agenzic help"]),
-        ("Inspect", ["agenzic inspect"]),
     ]
 
     # Create table

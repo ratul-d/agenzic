@@ -1,7 +1,7 @@
 import os
 import typer
 import requests
-from agenzic.utils.helpers import get_api_key
+from agenzic.utils.helpers import get_api_key,get_model
 
 API_URL = "https://api.openai.com/v1/chat/completions"
 
@@ -10,8 +10,9 @@ def ask_ai(prompt: str) -> str:
     headers = {"Authorization":f"Bearer {key}",
                "Content-Type": "application/json"
     }
+    model = get_model()
     payload = {
-        "model":"gpt-4o-mini",
+        "model":model,
         "messages": [{"role":"user","content":prompt}],
         "temperature":0.7
     }
