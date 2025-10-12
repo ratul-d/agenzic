@@ -1,5 +1,5 @@
 import typer
-from agenzic.commands import commit, summarize, review, tests, ask, codemetrics, inspect
+from agenzic.commands import commit, summarize, review, tests, ask, codemetrics, inspect, codegen
 from agenzic.commands.experimental import graph, inception, docgen, myflow
 import agenzic
 import platform
@@ -51,6 +51,7 @@ def help():
         "summarize": "Summarize a code file with AI",
         "review": "Generate AI-powered code review of a code file",
         "docgen": "Generate project or file documentation",
+        "codegen": "Generate code from a prompt and write to file",
         "tests": "Generate unit tests for your code",
         "ask": "Ask AI a question about your project or a specific file. | Defaults to current directory. Use -f or -d to override.",
         "inspect": "Debug inspector: show environment, config, PATH, plugins, Python version.",
@@ -72,6 +73,7 @@ def help():
         ("Summarize", ["agenzic summarize -f myscript.py"]),
         ("Review", ["agenzic review -f myscript.py"]),
         ("Docgen", ["agenzic docgen -f myscript.py", "agenzic docgen -d folder/"]),
+        ("Codegen", ["agenzic codegen 'write a python code' -f abc.py"]),
         ("Tests", ["agenzic tests -f myscript.py"]),
         ("Ask", [
             "agenzic ask 'Your Question'",
@@ -148,6 +150,7 @@ review.register(app)
 docgen.register(app)
 tests.register(app)
 ask.register(app)
+codegen.register(app)
 
 # Experimental
 inception.register(app)

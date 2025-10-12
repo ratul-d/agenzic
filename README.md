@@ -60,6 +60,9 @@ agenzic review -f myscript.py
 agenzic docgen -f myscript.py
 agenzic docgen -d folder/
 
+# Generate code file
+agenzic codegen 'write a python code' -f abc.py
+
 # Generate unit tests for a file
 agenzic tests -f myscript.py
 
@@ -67,6 +70,9 @@ agenzic tests -f myscript.py
 agenzic ask "Your Question"
 agenzic ask "Your Question" -f app.py
 agenzic ask "Your Question" -d folder/
+
+# Debug inspector: show environment, config, PATH, plugins, Python version.
+agenzic inspect
 
 # Show version and environment info
 agenzic version
@@ -76,9 +82,6 @@ agenzic about
 
 # Display help
 agenzic help
-
-# Debug inspector: show environment, config, PATH, plugins, Python version.
-agenzic inspect
 ```
 
 ---
