@@ -1,5 +1,5 @@
 import typer
-from agenzic.commands import commit, summarize, review, tests, ask, codemetrics, inspect, codegen
+from agenzic.commands import commit, summarize, review, tests, ask, codemetrics, inspect, codegen, projtree
 from agenzic.commands.experimental import graph, inception, docgen, myflow
 import agenzic
 import platform
@@ -54,6 +54,7 @@ def help():
         "codegen": "Generate code from a prompt and write to file",
         "tests": "Generate unit tests for your code",
         "ask": "Ask AI a question about your project or a specific file. | Defaults to current directory. Use -f or -d to override.",
+        "projtree": "Show a shallow project structure, ignoring common Python-generated files.",
         "inspect": "Debug inspector: show environment, config, PATH, plugins, Python version.",
     }
     for cmd, desc in commands.items():
@@ -80,10 +81,17 @@ def help():
             "agenzic ask 'Your Question' -f app.py",
             "agenzic ask 'Your Question' -d folder/"
         ]),
+        ("Projtree", [
+            "[bright_blue]# Show shallow project tree of current directory (default depth=2)[/bright_blue]",
+            "agenzic projtree",
+            "",
+            "[bright_blue]# Show project tree for a specific folder[/bright_blue]",
+            "agenzic projtree -d folder/",
+            "",
+            "[bright_blue]# Show project tree with custom depth (1=top-level only, 2=one level deep, etc.)[/bright_blue]",
+            "agenzic projtree -d folder/ -l 3",
+        ]),
         ("Inspect", ["agenzic inspect"]),
-        ("Version", ["agenzic version"]),
-        ("About", ["agenzic about"]),
-        ("Help", ["agenzic help"]),
     ]
 
     # Create table
@@ -151,6 +159,7 @@ docgen.register(app)
 tests.register(app)
 ask.register(app)
 codegen.register(app)
+projtree.register(app)
 
 # Experimental
 inception.register(app)

@@ -71,6 +71,11 @@ agenzic ask "Your Question"
 agenzic ask "Your Question" -f app.py
 agenzic ask "Your Question" -d folder/
 
+# Generate project tree with custom depth (1=top-level only, 2=one level deep, etc.) (default=2)
+agenzic projtree
+agenzic projtree -d folder/
+agenzic projtree -d folder/ -l 3
+
 # Debug inspector: show environment, config, PATH, plugins, Python version.
 agenzic inspect
 
