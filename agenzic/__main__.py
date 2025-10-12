@@ -25,18 +25,36 @@ def about():
     """Show information about Agenzic CLI"""
     typer.echo(
         f"""
-    Agenzic CLI v{agenzic.__version__}
-    AI-powered assistant for developers.
+        Agenzic CLI v{agenzic.__version__}
+        AI-powered assistant for developers.
 
-    Features:
-      - AI commit message generator
-      - AI code summarizer
-      - AI-powered code review
-      - Documentation generator
-      - Test case generator
+        Features:
+          - AI commit message generator
+          - AI code summarizer
+          - AI-powered code review
+          - Project or file documentation generator
+          - AI code generation from natural language prompts
+          - Unit test generation for your code
+          - Ask AI questions about your project or specific files
+          - Shallow project tree visualization
+          - Environment and config inspector
 
-    Repository: https://github.com/ratul-d/agenzic
-    """
+        Available Commands:
+          commit     Generate AI commit message(s) for staged changes
+          summarize  Summarize a code file with AI
+          review     Generate AI-powered code review of a code file
+          docgen     Generate project or file documentation
+          codegen    Generate code from a prompt and write to file
+          tests      Generate unit tests for your code
+          ask        Ask AI a question about your project or a specific file
+          projtree   Show a shallow project structure
+          inspect    Debug inspector: show environment, config, PATH, plugins, Python version
+          version    Show Agenzic version and environment info
+          about      Show project information
+          help       Show command usage
+
+        Repository: https://github.com/ratul-d/agenzic
+        """
     )
 
 @app.command()
